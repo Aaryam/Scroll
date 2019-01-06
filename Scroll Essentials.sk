@@ -1,0 +1,274 @@
+# Made By Aaryam #
+
+command /clearchat:
+  permission: clearchat.scroll
+  aliases: /cc, /clearc, /cchat
+  trigger:
+    loop 175 times:
+      broadcast " "
+    broadcast "&8&m-------------------------------------"
+    broadcast "&cScroll &8&l» &r&bChat was cleared by &c%player%"
+    broadcast "&8&m-------------------------------------"
+
+
+command /kick [<Offlineplayer>] <text>:
+  permission: kick.scroll
+  usage: /kick player reason
+  trigger:
+    if arg 1 is set:
+      if arg 2 is set:
+        kick arg 1 due to "&bKicked for &c%arg 2% &bby &c%player%"
+        broadcast "&8&m-------------------------------------"
+        broadcast "&cScroll &8&l» &c%arg-1% &bhas been kicked for &c%arg-2%"
+        broadcast "&8&m-------------------------------------"
+    if arg 1 is not set:
+      send "&8&m-------------------------------------" to player
+      send "&cScroll &8&l» &bCorrect usage: &c/kick player reason" to player
+      send "&8&m-------------------------------------" to player
+
+
+
+command /ban [<Offlineplayer>] <text>:
+  permission: ban.scroll
+  usage: /ban player reason
+  trigger:
+    if arg 1 is set:
+      if arg 2 is set:
+      kick arg 1 due to "&bBanned for &c%arg 2% &bby &c%player%"
+      ban arg 1 due to "&bBanned for &c%arg 2% &bby &c%player%"
+      broadcast "&8&m-------------------------------------"
+      broadcast "&cScroll &8&l» &c%arg-1% &bhas been banned for &c%arg-2%"
+      broadcast "&8&m-------------------------------------"
+    if arg 1 is not set:
+      send "&8&m-------------------------------------" to player
+      send "&cScroll &8&l» &bCorrect usage: &c/ban player reason" to player
+      send "&8&m-------------------------------------" to player
+
+
+
+
+command /vanish:
+  permission: vanish.scroll
+  aliases: /v
+  trigger:
+    hide the player from all players
+    send "&8&m-------------------------------------" to player
+    send "&cScroll &8&l» &bYou are now in &cVanish" to player
+    send "&8&m-------------------------------------" to player
+
+command /unvanish:
+  permission: unvanish.scroll
+  aliases: /unv, /uv
+  trigger:
+    reveal the player from all players
+    send "&8&m-------------------------------------" to player
+    send "&cScroll &8&l» &bYou are now not in &cVanish" to player
+    send "&8&m-------------------------------------" to player
+
+
+
+
+command /broadcast <text>:
+  permission: broadcast.scroll
+  aliases: /bd
+  trigger:
+    broadcast "&8&m-------------------------------------"
+    broadcast "&cScroll &8&l» &r&b%arg 1%"
+    broadcast "&8&m-------------------------------------"
+
+
+command /day:
+  permission: day.scroll
+  trigger:
+    set time to 9 am
+    broadcast "&8&m-------------------------------------"
+    broadcast "&cScroll &8&l» &bSet time to &cDay"
+    broadcast "&8&m-------------------------------------"
+
+
+command /night:
+  permission: night.scroll
+  trigger:
+    set time to night
+    broadcast "&8&m-------------------------------------"
+    broadcast "&cScroll &8&l» &bSet time to &cNight"
+    broadcast "&8&m-------------------------------------"
+
+
+command /rain:
+  permission: rain.scroll
+  trigger:
+    set weather to rain
+    broadcast "&8&m-------------------------------------"
+    broadcast "&cScroll &8&l» &bSet weather to &cRainy"
+    broadcast "&8&m-------------------------------------"
+
+command /sun:
+  permission: sun.scroll
+  aliases: /sunny
+  trigger:
+    set weather to sunny
+    broadcast "&8&m-------------------------------------"
+    broadcast "&cScroll &8&l» &bSet weather to &cSunny"
+    broadcast "&8&m-------------------------------------"
+
+
+
+
+
+command /gmc:
+  permission: gmc.scroll
+  trigger:
+    set player's gamemode to creative
+    send  "&8&m-------------------------" to player
+    send  "&cScroll &8&l» &bSet to &cCreative" to player
+    send "&8&m-------------------------" to player
+
+command /gms:
+  permission: gms.scroll
+  trigger:
+    set player's gamemode to survival
+    send  "&8&m-------------------------" to player
+    send  "&cScroll &8&l» &bSet to &cSurvival" to player
+    send "&8&m-------------------------" to player
+
+command /gmsp:
+  permission: gmsp.scroll
+  trigger:
+    set player's gamemode to spectator
+    send  "&8&m-------------------------" to player
+    send  "&cScroll &8&l» &bSet to &cSpectator" to player
+    send "&8&m-------------------------" to player
+
+command /gma:
+  permission: gma.scroll
+  trigger:
+    set player's gamemode to adventure
+    send  "&8&m-------------------------" to player
+    send  "&cScroll &8&l» &bSet to &cAdventure" to player
+    send "&8&m-------------------------" to player
+
+
+
+command /kickall:
+  permission: kickall.scroll
+  trigger:
+    broadcast "&8&m-------------------------" 
+    broadcast "&cScroll &8&l» &cKicking &ball players"
+    broadcast "&8&m-------------------------" 
+    wait 20 ticks
+    kick all players
+
+
+
+
+
+
+on first join:
+   set {playtime} to 0
+
+every minute:
+  add 1 to {playtime}
+
+command /transport <player>:
+  permission: transport.scroll
+  aliases: /tr
+  trigger:
+    teleport player to arg 1
+    message "&8&m-------------------------" to player
+    message "&cScroll &8&l» &bTeleporting to &c%arg-1%" to player
+    message "&8&m-------------------------" to player
+
+command /playtime:
+  trigger:
+    message "&8&m-----------------------------------------" to player
+    message "&cScroll &8&l» &bYou have been playing for &c%{playtime}% &bminutes" to player
+    message "&8&m-----------------------------------------" to player
+
+on death:
+  attacker is a player:
+    victim is a player:
+      broadcast "&c%attacker% &bkilled &c%victim% &6(+1)"
+      add 1 to {deaths.%victim%}
+      add 1 to {killstreak.%attacker%}
+      add 1 to {kills.%attacker%}
+      set {killstreak.%victim%} to 0
+
+
+command /killstats:
+  trigger:
+    send " "
+    send "&8&m-------------&r&8&l[&cScroll&8&l]&8&m-------------"
+    send " &8&l» &cTotal Deaths&8: &b%{deaths.%player%}%"
+    send " &8&l» &cTotal Kills&8: &b%{kills.%player%}%"
+    send " &8&l» &cKill Streak&8: &b%{killstreak.%player%}%"
+    send "&8&m-------------&r&8&l[&cScroll&8&l]&8&m-------------"
+    send " "
+
+command /announce <text>:
+  aliases: /an
+  trigger:
+    broadcast "&8&m-------------&r&8&l[&cScroll&8&l]&8&m-------------"
+    broadcast "&b%arg 1%"
+    broadcast "&8&m-------------&r&8&l[&cScroll&8&l]&8&m-------------"
+
+
+command /scroll:
+  permission: scroll.scroll
+  trigger:
+    send " "
+    send "&8&m-------------&r&8&l[&cScroll&8&l]&8&m-------------"
+    send " &8&l» &c/playtime&8: &bDisplays your playtime"
+    send " &8&l» &c/transport&8: &bTransports you to another player"
+    send " &8&l» &c/clearchat&8: &bClears the chat"
+    send " &8&l» &c/sun&8: &bSets the weather to sunny"
+    send " &8&l» &c/rain&8: &bSets the weather to rainy"
+    send " &8&l» &c/day&8: &bSets the time to day"
+    send " &8&l» &c/night&8: &bSets the time to night"
+    send " &8&l» &c/announce&8: &bAnnounce text"
+    send " &8&l» &c/killstats&8: &bShows your kill stats"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+command /stop:
+  permission: stop.scroll
+  trigger:
+    broadcast "&8&m-------------------------" 
+    broadcast "&cScroll &8&l» &bStopping &cServer"
+    broadcast "&8&m-------------------------" 
+    wait 20 ticks
+    stop server
+
+
+
+
+
+
+
+
+  
+
+    
+
+      
+  
+
+
+
+
+ 
+        
